@@ -11,6 +11,16 @@ type ApiError struct {
 	RequestId string
 }
 
+func (a *ApiError) MarshalJSONObject(enc *gojay.Encoder) {
+	enc.StringKey(JsKeyStatus, a.Status)
+	enc.StringKey(JsKeyMessage, a.Message)
+	enc.StringKey(JsKeyRequestId, a.RequestId)
+}
+
+func (a *ApiError) IsNil() bool {
+	return false
+}
+
 func (a *ApiError) UnmarshalJSONObject(d *gojay.Decoder, k string) error {
 	switch k {
 	case JsKeyStatus:
